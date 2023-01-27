@@ -197,11 +197,29 @@
         style="font-size: 20px"
 > </div>
     <div>
-    <input type="text" id="id_message_send_input" />
-    <button type="submit" id="id_message_send_button">Send</button>
+
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                <input type="text" id="id_message_send_input" />
+                <input type="submit" id="id_message_send_button" value="Send">Send</input>
+
 </div>
 </center>
 <script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
     renderQuestion = function (messageInput) {
         var div = document.createElement("div");
 
@@ -221,6 +239,19 @@
         document.querySelector("#id_message_send_input").value = "";
         document.querySelector("#id_chat_item_container").appendChild(div);
     }
+    sendMessage = function (messageInput) {
+        return fetch("{% url 'chat' %}", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json; charset=UTF-8',
+                "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: messageInput
+        })
+            .then(response => response.json())
+
+    }
 
     document.querySelector("#id_message_send_input").focus();
     document.querySelector("#id_message_send_input").onkeyup = function (e) {
@@ -229,14 +260,15 @@
         }
     };
     document.querySelector("#id_message_send_button").onclick = function (e) {
+        e.preventDefault();
         var messageInput = document.querySelector(
             "#id_message_send_input"
         ).value;
         // send message
+        sendMessage(messageInput)
+            .then(response => renderAnswer(response['answer']))
         // render question
         renderQuestion(messageInput);
-        // render response
-        renderAnswer("hi there!");
     };
 </script>
 </body>
