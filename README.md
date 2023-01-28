@@ -1,7 +1,9 @@
 # Team 23
-Mission: Team 23 is focusing making doing business with linkedin Marketing Solution easy.
-Vision: You do the thinking, we get things done.
-Team: Alica Tang, Qi Xia, Amita Paul, Himanshu Khurana, Yi Zhang*
+**Mission:** Team 23 is focusing making doing business with Linkedin Marketing Solution easy.
+
+**Vision:** You do the thinking, we get things done.
+
+**Team:** Alica Tang, Qi Xia, Amita Paul, Himanshu Khurana, Yi Zhang*
 
 ![what's Linkedin](https://github.com/aliciatang/team23/blob/main/assets/1.png?raw=true)
 
