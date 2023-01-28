@@ -197,10 +197,9 @@
         style="font-size: 20px"
 > </div>
     <div>
-
                 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
                 <input type="text" id="id_message_send_input" />
-                <input type="submit" id="id_message_send_button" value="Send">Send</input>
+                <input type="submit" id="id_message_send_button" value="Send"/>
 
 </div>
 </center>
@@ -244,10 +243,10 @@
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json; charset=UTF-8',
+                'Content-Type': 'application/x-www-form-urlencoded;; charset=UTF-8',
                 "X-CSRFToken": getCookie("csrftoken"),
             },
-            body: messageInput
+            body: "message=" + messageInput
         })
             .then(response => response.json())
 

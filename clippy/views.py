@@ -3,6 +3,8 @@ from django.http import JsonResponse
 
 from .models import Question
 
+import openai
+openai.api_key = '<yor key>'
 def index(request):
     question_list = Question.objects.order_by('pub_date')
     context = {
@@ -11,6 +13,18 @@ def index(request):
     return render(request, 'index.html', context)
 
 def chat(request):
-    data= {'answer': 'clippy says hi.'}
-    return JsonResponse(data)
+    prompt = request.POST.get("message")
+    model_engine = "text-davinci-003"
+    prompt = (f"{prompt}")
+    completions = openai.Completion.create(
+        engine=model_engine,
+        prompt=prompt,
+        max_tokens=1024,
+        n=1,
+        stop=None,
+        temperature=0.5,
+    )
 
+    message = completions.choices[0].text
+    data= {'answer':  message.strip()}
+    return JsonResponse(data)
