@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from .models import Question
 
 import openai
-openai.api_key = '<yor key>'
+openai.api_key = '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'
 def index(request):
     question_list = Question.objects.order_by('pub_date')
     context = {
