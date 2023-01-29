@@ -5,9 +5,9 @@
 
 **Team:** Alica Tang, Qi Xia, Amita Paul, Himanshu Khurana, Yi Zhang*
 
-![what's Linkedin](https://github.com/aliciatang/team23/blob/main/assets/1.png?raw=true)
+![what's Linkedin](https://github.com/aliciatang/team23/blob/main/static/1.png?raw=true)
 
-![what's LMS](https://github.com/aliciatang/team23/blob/main/assets/2.png?raw=true)
+![what's LMS](https://github.com/aliciatang/team23/blob/main/static/2.png?raw=true)
 
 # Requirements
 
@@ -32,6 +32,6 @@ visit website http://127.0.0.1:8000/clippy/
     ```
 2. add the questions and the url where the answer could be found.
 
-   ![add question](https://github.com/aliciatang/team23/blob/main/assets/retargeting.png?raw=true)
+   ![add question](https://github.com/aliciatang/team23/blob/main/static/retargeting.png?raw=true)
 
 

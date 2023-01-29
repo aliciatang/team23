@@ -25,10 +25,23 @@ SECRET_KEY = 'django-insecure-=+m_z$5l+==bl$i=epj@4xw#)y)2#ej!u*a5c2nj*0y+)&&0#+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['team23.azurewebsites.net', '127.0.0.1']
+CSRF_COOKIE_DOMAIN =['team23.azurewebsites.net']
+CSRF_TRUSTED_ORIGINS = ['https://team23.azurewebsites.net']
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_HTTPONLY = False
 
 
 # Application definition
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -40,15 +53,6 @@ INSTALLED_APPS = [
     'clippy'
 ]
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
 
 ROOT_URLCONF = 'clippySite.urls'
 
@@ -119,8 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = ['static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
