@@ -9,16 +9,16 @@
 <br>
 <div
         class="imessage"
-        id="id_chat_item_container"
-        style="font-size: 20px"
-> </div>
-    <div>
+
+> <div id="id_chat_item_container"></div>
+<div class="input">
             <input type="text" id="id_message_send_input"  name="message"/>
-            <input type="submit" id="id_message_send_button" value="Send"/>
+            <input type="submit" id="id_message_send_button" value="Send" style="display: none"/>
+</div>
 </div>
 </center>
 <script>
-
+    var inputField = document.querySelector("#id_message_send_input")
     renderQuestion = function (messageInput) {
         var div = document.createElement("div");
 
@@ -35,7 +35,8 @@
         p.className="from-them";
         p.innerHTML = messageInput;
         div.appendChild(p);
-        document.querySelector("#id_message_send_input").value = "";
+        inputField.value = "";
+        inputField.focus();
         document.querySelector("#id_chat_item_container").appendChild(div);
     }
     sendMessage = function (messageInput) {
