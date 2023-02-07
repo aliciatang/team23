@@ -6,7 +6,7 @@ from .models import Question
 
 import openai
 openai.api_key = os.getenv("OPENAI_API_KEY")
-model_engine = "text-davinci-003"
+default_model_engine = "text-davinci-003"
 context = """The following is a conversation with an AI assistant. The assistant has a profound knowledge of LinkedIn Marketing Solutions. She has read all articles in the following site: https://www.linkedin.com/help/lms
 Not only that, but she also knows everything from this site: https://business.linkedin.com/marketing-solutions
 
@@ -24,6 +24,9 @@ def index(request):
 
 def chat(request):
     prompt = request.POST.get("message")
+    model_engine = default_model_engine
+    if "code" in prompt.lower():
+        model_engine = "code-davinci-002"
     prompt = context + prompt + "\nAI: "
     prompt = (f"{prompt}")
     completions = openai.Completion.create(
