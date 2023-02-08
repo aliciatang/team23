@@ -27,7 +27,7 @@ def index(request):
 def chat(request):
     prompt = request.POST.get("message")
     session_key = request.session.session_key
-    log = "Human: " + prompt + "\n"
+    history = "Human: " + prompt + "\n"
     model_engine = default_model_engine
     if "code" in prompt.lower():
         model_engine = "code-davinci-002"
@@ -44,9 +44,12 @@ def chat(request):
 
     message = completions.choices[0].text
     data= {'answer':  message.strip()}
-    log = log + "AI: " + data['answer'] + "\n"
-
-    with open("../logs/" + session_key + ".txt", "a+") as f:
-        f.write(log)
+    history = history + "AI: " + data['answer'] + "\n"
+    log(session_key, history)
 
     return JsonResponse(data)
+
+def log(session_key, history):
+    base = "logs/"
+    with open( base + session_key + ".txt", "w+") as f:
+        f.write(history)
