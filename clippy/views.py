@@ -36,7 +36,7 @@ def chat(request):
     completions = openai.Completion.create(
         engine=model_engine,
         prompt=prompt,
-        max_tokens=1024,
+        max_tokens=10240,
         n=1,
         stop=['Human', 'AI'],
         temperature=0.4,
@@ -51,5 +51,5 @@ def chat(request):
 
 def log(session_key, history):
     base = "logs/"
-    with open(base + session_key + ".txt", "w+") as f:
+    with open(base + session_key + ".txt", "a+") as f:
         f.write(history)
