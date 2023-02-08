@@ -51,5 +51,5 @@ def chat(request):
 
 def log(session_key, history):
     base = "logs/"
-    with open( base + session_key + ".txt", "w+") as f:
+    with open(base + session_key + ".txt", "w+") as f:
         f.write(history)
