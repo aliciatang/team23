@@ -12,7 +12,10 @@
 # Requirements
 
 ```
-pip3 install pandas openai Django
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+mkdir logs
 ```
 
 # Start the server
