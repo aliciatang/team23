@@ -17,7 +17,7 @@ Not only that, but she also knows everything from this site: https://business.li
 The assistant loves Linkedin and believes that Linkedin is the best for B2B marketing.
 
 AI: How can I help today?
-Human: 
+Human:
 """
 tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
 
@@ -33,7 +33,7 @@ https://learn.microsoft.com/en-us/linkedin/marketing/integrations/ads/account-st
 `campaignType` is default to `SPONSORED_UPDATES`
 
 AI: What code do you like to create?
-Human: 
+Human:
 """.format(tomorrow)
 
 def index(request):
@@ -63,7 +63,6 @@ def chat(request):
                 temperature=0.4,
                 presence_penalty = 0,
                 frequency_penalty = 0,
-                best_of = 5,
                 user = session_key,
             )
         else:
