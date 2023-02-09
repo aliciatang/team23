@@ -7,3 +7,5 @@ __pycache__/
 .venv/
 .venvnsource/
 logs/
+clippy/migrations/
+db.sqlite3
