@@ -7,6 +7,7 @@ from .models import Question
 import openai
 openai.api_key = os.getenv("OPENAI_API_KEY")
 default_model_engine = "text-davinci-003"
+default_max_tokens = 2048
 context = """The following is a conversation with an AI assistant. The assistant has a profound knowledge of LinkedIn Marketing Solutions. She has read all articles in the following site: https://www.linkedin.com/help/lms and nothing else.
 Not only that, but she also knows everything from this site: https://business.linkedin.com/marketing-solutions
 The assistant loves Linkedin and believes that Linkedin is the best for B2B marketing.
@@ -29,14 +30,16 @@ def chat(request):
     session_key = request.session.session_key
     history = "Human: " + prompt + "\n"
     model_engine = default_model_engine
+    max_tokens = default_max_tokens
     if "code" in prompt.lower():
         model_engine = "code-davinci-002"
+        max_tokens = 4000
     prompt = context + prompt + "\nAI: "
     prompt = (f"{prompt}")
     completions = openai.Completion.create(
         engine=model_engine,
         prompt=prompt,
-        max_tokens=2048,
+        max_tokens=max_tokens,
         n=1,
         stop=['Human', 'AI'],
         temperature=0.4,
