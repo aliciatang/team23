@@ -36,7 +36,7 @@ def chat(request):
     completions = openai.Completion.create(
         engine=model_engine,
         prompt=prompt,
-        max_tokens=10240,
+        max_tokens=4097,
         n=1,
         stop=['Human', 'AI'],
         temperature=0.4,
