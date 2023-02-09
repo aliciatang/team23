@@ -26,29 +26,33 @@ def index(request):
     return render(request, 'index.html', context)
 
 def chat(request):
-    prompt = request.POST.get("message")
-    session_key = request.session.session_key
-    history = "Human: " + prompt + "\n"
-    model_engine = default_model_engine
-    max_tokens = default_max_tokens
-    if "code" in prompt.lower():
-        model_engine = "code-davinci-002"
-        max_tokens = 4000
-    prompt = context + prompt + "\nAI: "
-    prompt = (f"{prompt}")
-    completions = openai.Completion.create(
-        engine=model_engine,
-        prompt=prompt,
-        max_tokens=max_tokens,
-        n=1,
-        stop=['Human', 'AI'],
-        temperature=0.4,
-    )
+    try:
+        prompt = request.POST.get("message")
+        session_key = request.session.session_key
+        history = "Human: " + prompt + "\n"
+        model_engine = default_model_engine
+        max_tokens = default_max_tokens
+        if "code" in prompt.lower():
+            model_engine = "code-davinci-002"
+            max_tokens = 4000
+        prompt = context + prompt + "\nAI: "
+        prompt = (f"{prompt}")
+        completions = openai.Completion.create(
+            engine=model_engine,
+            prompt=prompt,
+            max_tokens=max_tokens,
+            n=1,
+            stop=['Human', 'AI'],
+            temperature=0.4,
+        )
 
-    message = completions.choices[0].text
-    data= {'answer':  message.strip()}
-    history = history + "AI: " + data['answer'] + "\n"
-    log(session_key, history)
+        message = completions.choices[0].text
+        data = {'answer':  message.strip()}
+        history = history + "AI: " + data['answer'] + "\n"
+        log(session_key, history)
+    except Exception as e:
+        print(e)
+        data = {'answer': "Sorry, I am having trouble understanding. Can you please repeat your question?"}
 
     return JsonResponse(data)
 
