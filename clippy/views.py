@@ -50,15 +50,15 @@ def chat(request):
     completions = {'choices':[{'text': "Sorry, I am having trouble understanding. Can you please repeat your question?"}]}
     try:
         if not os.path.exists(default_log_base + session_key + ".txt"):
-            pre_history = code_gen_context if is_code else default_context
+            # pre_history = code_gen_context if is_code else default_context
             with open(default_log_base + session_key + ".txt", "w+") as f:
-                f.write(pre_history)
+                f.write("")
 
-        with open(default_log_base + session_key + ".txt", "r") as f:
+        with open(default_log_base + session_key + ".txt", "r+") as f:
             pre_load_context = f.read()
         pre_load_context = "\n".join(pre_load_context.splitlines()[-6:]) + "\n"
         if is_code:
-            prompt = pre_load_context + history + "\nAI: "
+            prompt = code_gen_context + pre_load_context + history + "\nAI: "
             prompt = (f"{prompt}")
             completions = openai.Completion.create(
                 engine="code-davinci-002",
@@ -72,7 +72,7 @@ def chat(request):
                 user = session_key,
             )
         else:
-            prompt = pre_load_context + history + "\nAI: "
+            prompt = default_context + pre_load_context + history + "\nAI: "
             prompt = (f"{prompt}")
             completions = openai.Completion.create(
                 engine=model_engine,
