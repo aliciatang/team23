@@ -3,7 +3,7 @@ from django.http import JsonResponse
 import os
 import re
 import datetime
-
+from django.views.decorators.csrf import csrf_exempt
 from .models import Question
 
 import openai
@@ -41,6 +41,7 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+@csrf_exempt
 def chat(request):
     prompt = request.POST.get("message")
     session_key = request.session.session_key

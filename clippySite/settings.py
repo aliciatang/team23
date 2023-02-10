@@ -28,13 +28,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 CSRF_COOKIE_DOMAIN =['team23.azurewebsites.net']
-CSRF_TRUSTED_ORIGINS = ['https://team23.azurewebsites.net']
+CSRF_TRUSTED_ORIGINS = ['chrome-extension://nnilcnjiponaohbkdojkaaahakbbhhjp']
 CSRF_USE_SESSIONS = True
 CSRF_COOKIE_HTTPONLY = False
 
 
 # Application definition
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'whitenoise.runserver_nostatic',
+    'corsheaders',
     'clippy'
 ]
 
@@ -120,7 +122,11 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8000',
+    'chrome-extension://nnilcnjiponaohbkdojkaaahakbbhhjp'
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
