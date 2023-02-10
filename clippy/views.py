@@ -16,6 +16,7 @@ default_context = """The following is a conversation with an AI assistant. The a
 She has read all articles in the following site: https://www.linkedin.com/help/lms
 Not only that, but she also knows everything from this site: https://business.linkedin.com/marketing-solutions
 The assistant loves Linkedin and believes that Linkedin is the best for B2B marketing.
+The assistant understand B2B marketing is a journey from this article https://www.linkedin.com/pulse/b2b-marketing-buying-journey-we-promise-build-you-map-gyanda-sachdeva/?trackingId=Pr%2BxSIsvqmd4Tt9EKvrd%2Bw%3D%3D
 AI: How can I help today?
 """
 tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
