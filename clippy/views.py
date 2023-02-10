@@ -11,13 +11,12 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 default_model_engine = "text-davinci-003"
 default_max_tokens = 2048
+default_log_base = "logs/"
 default_context = """The following is a conversation with an AI assistant. The assistant has a profound knowledge of LinkedIn Marketing Solutions.
 She has read all articles in the following site: https://www.linkedin.com/help/lms
 Not only that, but she also knows everything from this site: https://business.linkedin.com/marketing-solutions
 The assistant loves Linkedin and believes that Linkedin is the best for B2B marketing.
-
 AI: How can I help today?
-Human:
 """
 tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
 
@@ -33,7 +32,6 @@ https://learn.microsoft.com/en-us/linkedin/marketing/integrations/ads/account-st
 `campaignType` is default to `SPONSORED_UPDATES`
 
 AI: What code do you like to create?
-Human:
 """.format(tomorrow)
 
 def index(request):
@@ -51,8 +49,16 @@ def chat(request):
     is_code = "code" in prompt.lower()
     completions = {'choices':[{'text': "Sorry, I am having trouble understanding. Can you please repeat your question?"}]}
     try:
+        if not os.path.exists(default_log_base + session_key + ".txt"):
+            pre_history = code_gen_context if is_code else default_context
+            with open(default_log_base + session_key + ".txt", "w+") as f:
+                f.write(pre_history)
+
+        with open(default_log_base + session_key + ".txt", "r") as f:
+            pre_load_context = f.read()
+        pre_load_context = "\n".join(pre_load_context.splitlines()[-6:]) + "\n"
         if is_code:
-            prompt = code_gen_context + prompt + "\nAI: "
+            prompt = pre_load_context + history + "\nAI: "
             prompt = (f"{prompt}")
             completions = openai.Completion.create(
                 engine="code-davinci-002",
@@ -66,7 +72,7 @@ def chat(request):
                 user = session_key,
             )
         else:
-            prompt = default_context + prompt + "\nAI: "
+            prompt = pre_load_context + history + "\nAI: "
             prompt = (f"{prompt}")
             completions = openai.Completion.create(
                 engine=model_engine,
@@ -96,6 +102,6 @@ def chat(request):
     return JsonResponse(data)
 
 def log(session_key, history):
-    base = "logs/"
-    with open(base + session_key + ".txt", "a+") as f:
+    default_log_base = "logs/"
+    with open(default_log_base + session_key + ".txt", "a+") as f:
         f.write(history)
